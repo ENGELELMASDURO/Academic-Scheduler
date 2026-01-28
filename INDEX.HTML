@@ -1,0 +1,309 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>AcademicScheduler - Simulación Completa</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+}
+h1, h2, h3 {
+    margin-top: 0;
+}
+.panel {
+    background: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+}
+select, input, button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+}
+button {
+    background: #1f2933;
+    color: white;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: center;
+}
+.progress {
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 20px;
+}
+.progress-bar {
+    background: #4caf50;
+    height: 100%;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+}
+.hidden {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<h1>AcademicScheduler (Simulación Integral)</h1>
+
+<div class="panel">
+<h2>Login Simulado</h2>
+<select id="rol">
+    <option value="alumno">Alumno</option>
+    <option value="docente">Docente</option>
+    <option value="admin">Administrador</option>
+</select>
+<button onclick="login()">Ingresar</button>
+</div>
+
+<div id="alumnoPanel" class="panel hidden">
+<h2>Panel Alumno</h2>
+<p><strong>Alumno:</strong> Juan Pérez</p>
+<p><strong>Créditos:</strong> <span id="creditosTxt"></span></p>
+
+<div class="progress">
+    <div id="barra" class="progress-bar"></div>
+</div>
+
+<h3>Reservar Sesión</h3>
+<label>Profesor</label>
+<select id="profesor">
+    <option>Ana</option>
+    <option>Carlos</option>
+</select>
+
+<label>Idioma</label>
+<select id="idioma">
+    <option>Inglés</option>
+    <option>Francés</option>
+</select>
+
+<label>Hora inicio (:00 o :30)</label>
+<input type="time" id="hora" step="1800">
+
+<label>Duración</label>
+<select id="duracion">
+    <option value="50">1 sesión (50 min)</option>
+    <option value="75">1.5 sesiones (75 min)</option>
+    <option value="100">2 sesiones (100 min)</option>
+</select>
+
+<button onclick="reservar()">Reservar</button>
+
+<h3>Historial de Reservas</h3>
+<table>
+<thead>
+<tr>
+<th>Profesor</th>
+<th>Idioma</th>
+<th>Inicio</th>
+<th>Fin real</th>
+<th>Bloqueado hasta</th>
+<th>Créditos</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody id="tablaAlumno"></tbody>
+</table>
+</div>
+
+<div id="docentePanel" class="panel hidden">
+<h2>Panel Docente</h2>
+<p><strong>Docente:</strong> Ana</p>
+
+<h3>Agenda</h3>
+<table>
+<thead>
+<tr>
+<th>Alumno</th>
+<th>Inicio</th>
+<th>Fin</th>
+</tr>
+</thead>
+<tbody id="tablaDocente"></tbody>
+</table>
+</div>
+
+<div id="adminPanel" class="panel hidden">
+<h2>Panel Administrador</h2>
+
+<h3>Usuarios</h3>
+<p>Administra alumnos, docentes y paquetes (simulado)</p>
+
+<h3>Reservas Globales</h3>
+<table>
+<thead>
+<tr>
+<th>Alumno</th>
+<th>Profesor</th>
+<th>Inicio</th>
+<th>Fin</th>
+</tr>
+</thead>
+<tbody id="tablaAdmin"></tbody>
+</table>
+</div>
+
+<script>
+// ================= JSON SIMULADO =================
+
+let alumno = {
+    nombre: "Juan Pérez",
+    creditosTotales: 10,
+    creditosDisponibles: 10
+};
+
+let reservas = [];
+
+// ================= LOGIN =================
+
+function login() {
+    let rol = document.getElementById("rol").value;
+    ocultarTodo();
+
+    if (rol === "alumno") document.getElementById("alumnoPanel").classList.remove("hidden");
+    if (rol === "docente") document.getElementById("docentePanel").classList.remove("hidden");
+    if (rol === "admin") document.getElementById("adminPanel").classList.remove("hidden");
+
+    actualizarUI();
+}
+
+function ocultarTodo() {
+    document.getElementById("alumnoPanel").classList.add("hidden");
+    document.getElementById("docentePanel").classList.add("hidden");
+    document.getElementById("adminPanel").classList.add("hidden");
+}
+
+// ================= LOGICA HORARIO DINAMICO =================
+
+function calcularBloqueo(horaInicio, duracion) {
+    let [h, m] = horaInicio.split(":").map(Number);
+    let inicio = new Date();
+    inicio.setHours(h, m, 0);
+
+    let fin = new Date(inicio.getTime() + duracion * 60000);
+    let bloqueo = new Date(fin);
+
+    let min = bloqueo.getMinutes();
+
+    if (min > 0 && min <= 30) bloqueo.setMinutes(30, 0);
+    else if (min > 30) bloqueo.setHours(bloqueo.getHours() + 1, 0, 0);
+
+    return {
+        finReal: fin,
+        bloqueado: bloqueo
+    };
+}
+
+// ================= RESERVAR =================
+
+function reservar() {
+    let profesor = document.getElementById("profesor").value;
+    let idioma = document.getElementById("idioma").value;
+    let hora = document.getElementById("hora").value;
+    let duracion = parseInt(document.getElementById("duracion").value);
+
+    if (!hora) return alert("Selecciona una hora");
+
+    let creditos = duracion === 50 ? 1 : duracion === 75 ? 1.5 : 2;
+    if (alumno.creditosDisponibles < creditos) return alert("Créditos insuficientes");
+
+    let r = calcularBloqueo(hora, duracion);
+
+    alumno.creditosDisponibles -= creditos;
+
+    reservas.push({
+        alumno: alumno.nombre,
+        profesor,
+        idioma,
+        inicio: hora,
+        fin: r.finReal.toTimeString().slice(0,5),
+        bloqueo: r.bloqueado.toTimeString().slice(0,5),
+        creditos
+    });
+
+    actualizarUI();
+}
+
+// ================= UI =================
+
+function actualizarUI() {
+    document.getElementById("creditosTxt").innerText =
+        alumno.creditosDisponibles + " / " + alumno.creditosTotales;
+
+    let porcentaje = (alumno.creditosDisponibles / alumno.creditosTotales) * 100;
+    let barra = document.getElementById("barra");
+    barra.style.width = porcentaje + "%";
+    barra.innerText = alumno.creditosDisponibles + " créditos";
+
+    cargarTablas();
+}
+
+function cargarTablas() {
+    let tA = document.getElementById("tablaAlumno");
+    let tD = document.getElementById("tablaDocente");
+    let tAd = document.getElementById("tablaAdmin");
+
+    tA.innerHTML = tD.innerHTML = tAd.innerHTML = "";
+
+    reservas.forEach((r, i) => {
+        tA.innerHTML += `
+        <tr>
+        <td>${r.profesor}</td>
+        <td>${r.idioma}</td>
+        <td>${r.inicio}</td>
+        <td>${r.fin}</td>
+        <td>${r.bloqueo}</td>
+        <td>${r.creditos}</td>
+        <td><button onclick="cancelar(${i})">Cancelar</button></td>
+        </tr>`;
+
+        tD.innerHTML += `
+        <tr>
+        <td>${r.alumno}</td>
+        <td>${r.inicio}</td>
+        <td>${r.fin}</td>
+        </tr>`;
+
+        tAd.innerHTML += `
+        <tr>
+        <td>${r.alumno}</td>
+        <td>${r.profesor}</td>
+        <td>${r.inicio}</td>
+        <td>${r.fin}</td>
+        </tr>`;
+    });
+}
+
+// ================= CANCELAR =================
+
+function cancelar(i) {
+    alumno.creditosDisponibles += reservas[i].creditos;
+    reservas.splice(i,1);
+    actualizarUI();
+}
+
+</script>
+
+</body>
+</html>
+ 
