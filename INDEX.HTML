@@ -162,8 +162,25 @@ th, td {
 <tbody id="tablaAdmin"></tbody>
 </table>
 </div>
+ <script>
+     // ================= DOM ELEMENTS =================
 
-<script>
+const alumnoPanel   = document.getElementById("alumnoPanel");
+const docentePanel  = document.getElementById("docentePanel");
+const adminPanel    = document.getElementById("adminPanel");
+
+const profesorSelect = document.getElementById("profesor");
+const idiomaSelect   = document.getElementById("idioma");
+const horaInput      = document.getElementById("hora");
+const duracionSelect = document.getElementById("duracion");
+
+const creditosTxt = document.getElementById("creditosTxt");
+const barra       = document.getElementById("barra");
+
+const tablaAlumno  = document.getElementById("tablaAlumno");
+const tablaDocente = document.getElementById("tablaDocente");
+const tablaAdmin   = document.getElementById("tablaAdmin");
+ 
 // ================= JSON SIMULADO =================
 
 let alumno = {
@@ -180,54 +197,73 @@ function login() {
     let rol = document.getElementById("rol").value;
     ocultarTodo();
 
-    if (rol === "alumno") document.getElementById("alumnoPanel").classList.remove("hidden");
-    if (rol === "docente") document.getElementById("docentePanel").classList.remove("hidden");
-    if (rol === "admin") document.getElementById("adminPanel").classList.remove("hidden");
+    if (rol === "alumno") alumnoPanel.classList.remove("hidden");
+    if (rol === "docente") docentePanel.classList.remove("hidden");
+    if (rol === "admin") adminPanel.classList.remove("hidden");
 
     actualizarUI();
 }
 
 function ocultarTodo() {
-    document.getElementById("alumnoPanel").classList.add("hidden");
-    document.getElementById("docentePanel").classList.add("hidden");
-    document.getElementById("adminPanel").classList.add("hidden");
+    alumnoPanel.classList.add("hidden");
+    docentePanel.classList.add("hidden");
+    adminPanel.classList.add("hidden");
 }
 
-// ================= LOGICA HORARIO DINAMICO =================
+// ================= TIEMPO =================
+
+function crearFecha(hora) {
+    let [h, m] = hora.split(":").map(Number);
+    let d = new Date();
+    d.setHours(h, m, 0, 0);
+    return d;
+}
+
+// ================= HORARIO DINAMICO =================
 
 function calcularBloqueo(horaInicio, duracion) {
-    let [h, m] = horaInicio.split(":").map(Number);
-    let inicio = new Date();
-    inicio.setHours(h, m, 0);
-
+    let inicio = crearFecha(horaInicio);
     let fin = new Date(inicio.getTime() + duracion * 60000);
     let bloqueo = new Date(fin);
 
     let min = bloqueo.getMinutes();
+    if (min > 0 && min <= 30) bloqueo.setMinutes(30,0,0);
+    else if (min > 30) bloqueo.setHours(bloqueo.getHours()+1,0,0);
 
-    if (min > 0 && min <= 30) bloqueo.setMinutes(30, 0);
-    else if (min > 30) bloqueo.setHours(bloqueo.getHours() + 1, 0, 0);
+    return { inicio, fin, bloqueo };
+}
 
-    return {
-        finReal: fin,
-        bloqueado: bloqueo
-    };
+// ================= VALIDAR DISPONIBILIDAD =================
+
+function horaDisponible(profesor, nuevaInicio) {
+    return !reservas.some(r => {
+        if (r.profesor !== profesor) return false;
+        return nuevaInicio >= r.inicio && nuevaInicio < r.bloqueo;
+    });
 }
 
 // ================= RESERVAR =================
 
 function reservar() {
-    let profesor = document.getElementById("profesor").value;
-    let idioma = document.getElementById("idioma").value;
-    let hora = document.getElementById("hora").value;
-    let duracion = parseInt(document.getElementById("duracion").value);
+    let profesor = profesorSelect.value;
+    let idioma = idiomaSelect.value;
+    let hora = horaInput.value;
+    let duracion = parseInt(duracionSelect.value);
 
-    if (!hora) return alert("Selecciona una hora");
+    if (!hora) return alert("Selecciona una hora válida (:00 o :30)");
 
     let creditos = duracion === 50 ? 1 : duracion === 75 ? 1.5 : 2;
-    if (alumno.creditosDisponibles < creditos) return alert("Créditos insuficientes");
+    if (alumno.creditosDisponibles < creditos) {
+        alert("Créditos insuficientes");
+        return;
+    }
 
     let r = calcularBloqueo(hora, duracion);
+
+    if (!horaDisponible(profesor, r.inicio)) {
+        alert("Horario NO disponible (bloqueado por otra reserva)");
+        return;
+    }
 
     alumno.creditosDisponibles -= creditos;
 
@@ -235,9 +271,9 @@ function reservar() {
         alumno: alumno.nombre,
         profesor,
         idioma,
-        inicio: hora,
-        fin: r.finReal.toTimeString().slice(0,5),
-        bloqueo: r.bloqueado.toTimeString().slice(0,5),
+        inicio: r.inicio,
+        fin: r.fin,
+        bloqueo: r.bloqueo,
         creditos
     });
 
@@ -247,49 +283,48 @@ function reservar() {
 // ================= UI =================
 
 function actualizarUI() {
-    document.getElementById("creditosTxt").innerText =
+    creditosTxt.innerText =
         alumno.creditosDisponibles + " / " + alumno.creditosTotales;
 
     let porcentaje = (alumno.creditosDisponibles / alumno.creditosTotales) * 100;
-    let barra = document.getElementById("barra");
     barra.style.width = porcentaje + "%";
     barra.innerText = alumno.creditosDisponibles + " créditos";
 
     cargarTablas();
 }
 
-function cargarTablas() {
-    let tA = document.getElementById("tablaAlumno");
-    let tD = document.getElementById("tablaDocente");
-    let tAd = document.getElementById("tablaAdmin");
+function fmt(d){ return d.toTimeString().slice(0,5); }
 
-    tA.innerHTML = tD.innerHTML = tAd.innerHTML = "";
+function cargarTablas() {
+    tablaAlumno.innerHTML = "";
+    tablaDocente.innerHTML = "";
+    tablaAdmin.innerHTML = "";
 
     reservas.forEach((r, i) => {
-        tA.innerHTML += `
+        tablaAlumno.innerHTML += `
         <tr>
-        <td>${r.profesor}</td>
-        <td>${r.idioma}</td>
-        <td>${r.inicio}</td>
-        <td>${r.fin}</td>
-        <td>${r.bloqueo}</td>
-        <td>${r.creditos}</td>
-        <td><button onclick="cancelar(${i})">Cancelar</button></td>
+            <td>${r.profesor}</td>
+            <td>${r.idioma}</td>
+            <td>${fmt(r.inicio)}</td>
+            <td>${fmt(r.fin)}</td>
+            <td>${fmt(r.bloqueo)}</td>
+            <td>${r.creditos}</td>
+            <td><button onclick="cancelar(${i})">Cancelar</button></td>
         </tr>`;
 
-        tD.innerHTML += `
+        tablaDocente.innerHTML += `
         <tr>
-        <td>${r.alumno}</td>
-        <td>${r.inicio}</td>
-        <td>${r.fin}</td>
+            <td>${r.alumno}</td>
+            <td>${fmt(r.inicio)}</td>
+            <td>${fmt(r.fin)}</td>
         </tr>`;
 
-        tAd.innerHTML += `
+        tablaAdmin.innerHTML += `
         <tr>
-        <td>${r.alumno}</td>
-        <td>${r.profesor}</td>
-        <td>${r.inicio}</td>
-        <td>${r.fin}</td>
+            <td>${r.alumno}</td>
+            <td>${r.profesor}</td>
+            <td>${fmt(r.inicio)}</td>
+            <td>${fmt(r.fin)}</td>
         </tr>`;
     });
 }
@@ -301,9 +336,8 @@ function cancelar(i) {
     reservas.splice(i,1);
     actualizarUI();
 }
-
 </script>
+  
 
 </body>
 </html>
- 
