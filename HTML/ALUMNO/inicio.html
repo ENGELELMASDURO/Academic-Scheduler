@@ -1,0 +1,67 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>AcademicScheduler | Alumno</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link rel="stylesheet" href="../../CSS/estilos.css">
+ 
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="hamburger">☰</div>
+
+        <section class="credits-section">
+            <h3>Créditos</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:70%;"></div>
+            </div>
+            <p class="credits-text">7 / 10 sesiones disponibles</p>
+        </section>
+
+        <section class="sidebar-actions">
+            <a href="formreservas.html" class="btn-create">+ Nueva Reserva</a>
+        </section>
+
+        <section class="view-options">
+            <button id="viewMonth">Mes</button>
+            <button id="viewWeek">Semana</button>
+            <button id="viewDay">Día</button>
+            <button id="viewList">Reservas</button>
+        </section>
+
+        <section class="history">
+            <a href="historial.html">Historial de Sesiones</a>
+        </section>
+                 <section class="ajustes">
+            <a href="ajustes.html">Ajustes</a>
+        </section>
+
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+
+        <!-- CALENDARIO FULLCALENDAR -->
+        <div id="calendar"></div>
+
+    </main>
+
+</div>
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+<!-- JS propio -->
+<script src="../../JS/calendarAlumno.js"></script>
+
+</body>
+</html>
