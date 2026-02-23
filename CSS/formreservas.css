@@ -1,0 +1,429 @@
+ /* ESTILOS MINIMALISTAS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.4;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* HEADER SIMPLE */
+.form-header {
+    margin-bottom: 30px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.back-btn {
+    color: #40826D;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+}
+
+.header-center h1 {
+    font-size: 20px;
+    color: #40826D;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* CRÉDITOS SIMPLE */
+.credits-display {
+    background-color: #000;
+    border: 1px solid #40826D;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+.credits-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.credits-number {
+    font-weight: bold;
+    color: #40826D;
+}
+
+.credits-detail {
+    font-size: 12px;
+    color: #999;
+}
+
+/* FORMULARIO COMPACTO */
+.form-section {
+    background-color: #000;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.section-title {
+    color: #40826D;
+    font-size: 16px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* GRUPOS COMPACTOS */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #fff;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* INPUTS BÁSICOS */
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: #000;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: #40826D;
+}
+
+.form-hint {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* OPCIONES DE ACTIVIDAD COMPACTAS */
+.activity-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.activity-option input[type="radio"] {
+    display: none;
+}
+
+.activity-card {
+    background-color: #000;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 12px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.activity-option input[type="radio"]:checked + .activity-card {
+    border-color: #40826D;
+}
+
+.activity-icon {
+    font-size: 18px;
+    color: #40826D;
+    margin-bottom: 6px;
+}
+
+.activity-content h3 {
+    color: #fff;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.activity-content p {
+    color: #666;
+    font-size: 11px;
+}
+
+/* HORARIO DEL PROFESOR COMPACTO */
+.profesor-horario {
+    background-color: #000;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 8px;
+    font-size: 13px;
+}
+
+.horario-title {
+    color: #40826D;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.horario-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.horario-nota {
+    color: #F39C12;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* OPCIONES DE DURACIÓN COMPACTAS */
+.duration-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.duration-option input[type="radio"] {
+    display: none;
+}
+
+.duration-card {
+    background-color: #000;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.duration-option input[type="radio"]:checked + .duration-card {
+    border-color: #40826D;
+}
+
+.duration-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.duration-header h3 {
+    color: #fff;
+    font-size: 13px;
+}
+
+.duration-creditos {
+    background-color: #40826D;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.duration-time {
+    font-size: 14px;
+    font-weight: bold;
+    color: #40826D;
+    margin-bottom: 4px;
+}
+
+.duration-desc {
+    font-size: 11px;
+    color: #666;
+}
+
+/* INFORMACIÓN COMPACTA */
+.horario-dinamico-info {
+    background-color: #000;
+    border: 1px solid #40826D;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 12px;
+    font-size: 13px;
+}
+
+.info-content h4 {
+    color: #40826D;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.info-content p {
+    color: #ccc;
+    margin-bottom: 6px;
+}
+
+.info-content ul {
+    color: #ccc;
+    padding-left: 16px;
+    font-size: 12px;
+}
+
+/* BARRA DE PROGRESO SIMPLE */
+.credits-progress-visual {
+    background-color: #000;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.progress-labels strong {
+    color: #40826D;
+}
+
+.progress-bar-full {
+    width: 100%;
+    height: 8px;
+    background-color: #222;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 6px;
+}
+
+.progress-used {
+    background-color: #40826D;
+    height: 100%;
+}
+
+.progress-available {
+    background-color: #333;
+    height: 100%;
+}
+
+.progress-markers {
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+    font-size: 12px;
+}
+
+/* BOTONES SIMPLES */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    border: none;
+}
+
+.btn-secondary {
+    background-color: #000;
+    color: #999;
+    border: 1px solid #333;
+}
+
+.btn-primary {
+    background-color: #40826D;
+    color: #fff;
+    border: 1px solid #40826D;
+}
+
+.btn-primary:hover {
+    background-color: #5A9D8A;
+}
+
+/* INFORMACIÓN IMPORTANTE COMPACTA */
+.form-info-important {
+    background-color: #000;
+    border: 1px solid #F39C12;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.info-content h4 {
+    color: #F39C12;
+    margin-bottom: 6px;
+}
+
+.info-content ul {
+    color: #ccc;
+    padding-left: 16px;
+    font-size: 12px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .activity-options,
+    .duration-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+} 

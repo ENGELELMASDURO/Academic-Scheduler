@@ -1,0 +1,397 @@
+ <!DOCTYPE html>
+<html lang="es"> 
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva Reserva | AcademicScheduler</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../CSS/formreservas.css">
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables de color */
+        :root {
+            --viridian-green: #40826D;
+            --viridian-green-light: #5A9D8A;
+            --viridian-green-dark: #2D5F4E;
+            --black-bg: #000000;
+            --black-card: #121212;
+            --black-border: #222222;
+            --gray-text: #CCCCCC;
+            --white: #FFFFFF;
+            --error-red: #E74C3C;
+            --warning-orange: #F39C12;
+        }
+
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--black-bg);
+            color: var(--white);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER CON BARRA DE CRÉDITOS -->
+    <header class="form-header">
+        <div class="container header-container">
+            <!-- Botón volver -->
+            <div class="header-left">
+                <a href="inicio.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Volver al Calendario
+                </a>
+            </div>
+            <!-- Título -->
+            <div class="header-center">
+                <h1><i class="fas fa-calendar-plus"></i> Nueva Reserva Académica</h1>
+            </div>
+            <!-- Barra de créditos -->
+            <div class="header-right">
+                <div class="credits-display">
+                    <div class="credits-info">
+                        <i class="fas fa-coins"></i>
+                        <span class="credits-text">Créditos Disponibles:</span>
+                        <span class="credits-number">10</span>
+                    </div>
+                    <div class="credits-bar">
+                        <div class="credits-progress" style="width: 100%;"></div>
+                    </div>
+                    <div class="credits-detail">10 de 10 sesiones disponibles</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- FORMULARIO DE RESERVA -->
+    <main class="form-main">
+        <div class="container">
+            <form class="reserva-form" action="#" method="POST">
+                <!-- SECCIÓN 1: INFORMACIÓN DE LA RESERVA -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-info-circle"></i> Información de la Reserva
+                    </h2>
+                    
+                    <!-- Tipo de Actividad -->
+                    <div class="form-group">
+                        <label for="tipoActividad" class="form-label">
+                            <i class="fas fa-graduation-cap"></i> Tipo de Actividad
+                        </label>
+                        <div class="activity-options">
+                            <label class="activity-option">
+                                <input type="radio" name="tipoActividad" value="clase" checked>
+                                <div class="activity-card">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-chalkboard-teacher"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h3>Clase Personalizada</h3>
+                                        <p>Sesión regular de aprendizaje</p>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="activity-option">
+                                <input type="radio" name="tipoActividad" value="examen">
+                                <div class="activity-card">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-file-alt"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h3>Examen de Ubicación</h3>
+                                        <p>Evaluación de nivel</p>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="activity-option">
+                                <input type="radio" name="tipoActividad" value="muestra">
+                                <div class="activity-card">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-eye"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h3>Clase Muestra</h3>
+                                        <p>Sesión introductoria</p>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Fecha y Hora -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fecha" class="form-label">
+                                <i class="fas fa-calendar-day"></i> Fecha
+                            </label>
+                            <input type="date" id="fecha" name="fecha" required class="form-input" min="2026-02-06" value="2026-02-06">
+                            <div class="form-hint">Selecciona una fecha futura</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="horaInicio" class="form-label">
+                                <i class="fas fa-clock"></i> Hora de Inicio
+                            </label>
+                            <select id="horaInicio" name="horaInicio" required class="form-select">
+                                <option value="">Selecciona una hora</option>
+                                <!-- Horas en punto -->
+                                <option value="08:00">08:00 - Hora disponible</option>
+                                <option value="08:30">08:30 - Hora disponible</option>
+                                <option value="09:00">09:00 - Hora disponible</option>
+                                <option value="09:30">09:30 - Hora disponible</option>
+                                <option value="10:00">10:00 - Hora disponible</option>
+                                <option value="10:30">10:30 - Hora disponible</option>
+                                <option value="11:00">11:00 - Hora disponible</option>
+                                <option value="11:30">11:30 - Hora disponible</option>
+                                <option value="12:00">12:00 - Hora disponible</option>
+                                <option value="12:30">12:30 - Hora disponible</option>
+                                <option value="13:00">13:00 - Hora disponible</option>
+                                <option value="13:30">13:30 - Hora disponible</option>
+                                <option value="14:00">14:00 - Hora disponible</option>
+                                <option value="14:30">14:30 - Hora disponible</option>
+                                <option value="15:00">15:00 - Hora disponible</option>
+                                <option value="15:30">15:30 - Hora disponible</option>
+                                <option value="16:00">16:00 - Hora disponible</option>
+                                <option value="16:30">16:30 - Hora disponible</option>
+                                <option value="17:00">17:00 - Hora disponible</option>
+                                <option value="17:30">17:30 - Hora disponible</option>
+                                <option value="18:00">18:00 - Hora disponible</option>
+                                <option value="18:30">18:30 - Hora disponible</option>
+                                <option value="19:00">19:00 - Hora disponible</option>
+                            </select>
+                            <div class="form-hint">
+                                <i class="fas fa-info-circle"></i> Las clases solo pueden iniciar a la hora en punto (:00) o media hora (:30)
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- SECCIÓN 2: CONFIGURACIÓN -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-cogs"></i> Configuración de la Sesión
+                    </h2>
+                    
+                    <!-- Selección de Profesor -->
+                    <div class="form-group">
+                        <label for="profesor" class="form-label">
+                            <i class="fas fa-user-tie"></i> Profesor
+                        </label>
+                        <select id="profesor" name="profesor" required class="form-select">
+                            <option value="">Selecciona un profesor</option>
+                            <option value="1">A</option>
+                            <option value="2">B</option>
+                            <option value="3">C</option>
+                        </select>
+                        <div class="profesor-horario">
+                            <div class="horario-title">
+                                <i class="fas fa-calendar-check"></i> Horario del Profesor Seleccionado:
+                            </div>
+                            <div class="horario-info">
+                                <span class="horario-dias">Lunes a Viernes</span>
+                                <span class="horario-horas">8:00 - 18:00 hrs</span>
+                            </div>
+                            <div class="horario-nota">
+                                <i class="fas fa-exclamation-triangle"></i> Recuerda que los horarios ya reservados por otros alumnos no aparecerán disponibles
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Selección de Idioma -->
+                    <div class="form-group">
+                        <label for="idioma" class="form-label">
+                            <i class="fas fa-language"></i> Idioma
+                        </label>
+                        <select id="idioma" name="idioma" required class="form-select">
+                            <option value="">Selecciona un idioma</option>
+                            <option value="ingles">Inglés</option>
+                            <option value="frances">Frances</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Duración de la Sesión -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-hourglass-half"></i> Duración de la Sesión
+                        </label>
+                        <div class="duration-options">
+                            <label class="duration-option">
+                                <input type="radio" name="duracion" value="50" checked>
+                                <div class="duration-card">
+                                    <div class="duration-header">
+                                        <h3>Sesión Simple</h3>
+                                        <div class="duration-creditos">1 Crédito</div>
+                                    </div>
+                                    <div class="duration-time">50 minutos</div>
+                                    <div class="duration-desc">
+                                        <i class="fas fa-check"></i> Ideal para práctica rápida
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="duration-option">
+                                <input type="radio" name="duracion" value="75">
+                                <div class="duration-card">
+                                    <div class="duration-header">
+                                        <h3>Sesión y Media</h3>
+                                        <div class="duration-creditos">1.5 Créditos</div>
+                                    </div>
+                                    <div class="duration-time">75 minutos</div>
+                                    <div class="duration-desc">
+                                        <i class="fas fa-check"></i> Perfecto para lecciones completas
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="duration-option">
+                                <input type="radio" name="duracion" value="100">
+                                <div class="duration-card">
+                                    <div class="duration-header">
+                                        <h3>Doble Sesión</h3>
+                                        <div class="duration-creditos">2 Créditos</div>
+                                    </div>
+                                    <div class="duration-time">100 minutos</div>
+                                    <div class="duration-desc">
+                                        <i class="fas fa-check"></i> Recomendado para temas extensos
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <!-- Información sobre bloqueo de horario -->
+                        <div class="horario-dinamico-info">
+                            <div class="info-icon">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>Lógica de Horario Dinámico</h4>
+                                <p>El sistema calculará automáticamente:</p>
+                                <ul>
+                                    <li>Hora de finalización exacta</li>
+                                    <li>Bloqueo hasta el siguiente intervalo (:00 o :30)</li>
+                                    <li>Horarios disponibles para próximas reservas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- SECCIÓN 3: DESCRIPCIÓN OPCIONAL -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-edit"></i> Información Adicional (Opcional)
+                    </h2>
+                    <div class="form-group">
+                        <label for="descripcion" class="form-label">
+                            <i class="fas fa-sticky-note"></i> Descripción / Notas
+                        </label>
+                        <textarea id="descripcion" name="descripcion" class="form-textarea" rows="4" placeholder="Escribe aquí cualquier observación, tema específico que deseas tratar, material que quieres revisar, o información adicional que el profesor deba conocer..."></textarea>
+                        <div class="form-hint">
+                            Máximo 500 caracteres. Esta información será visible para el profesor.
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Barra de progreso visual -->
+                <div class="credits-progress-visual">
+                    <div class="progress-labels">
+                        <span>Créditos usados: <strong>1/10</strong></span>
+                        <span>Disponible: <strong>9 sesiones</strong></span>
+                    </div>
+                    <div class="progress-bar-full">
+                        <div class="progress-used" style="width: 10%;"></div>
+                        <div class="progress-available" style="width: 90%;"></div>
+                    </div>
+                    <div class="progress-markers">
+                        <span>0</span>
+                        <span>5</span>
+                        <span>10</span>
+                    </div>
+                </div>
+                
+                <!-- BOTONES DE ACCIÓN -->
+                <div class="form-actions">
+                    <div class="action-left">
+                        <a href="inicio.html" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Cancelar
+                        </a>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-check-circle"></i> Confirmar Reserva
+                    </button>
+                </div>
+                
+                <!-- INFORMACIÓN IMPORTANTE -->
+                <div class="form-info-important">
+                    <div class="info-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="info-content">
+                        <h4>Importante:</h4>
+                        <ul>
+                            <li>Una vez confirmada la reserva, se descontarán automáticamente los créditos correspondientes</li>
+                            <li>El sistema verificará que el profesor esté disponible en el horario seleccionado</li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+     <script>
+document.querySelector('.reserva-form').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const fecha = document.getElementById('fecha').value;
+    const horaInicio = document.getElementById('horaInicio').value;
+    const profesor = document.getElementById('profesor').value;
+    const idioma = document.getElementById('idioma').value;
+    const duracion = document.querySelector('input[name="duracion"]:checked').value;
+
+    if(!fecha || !horaInicio || !profesor || !idioma){
+        alert("Completa todos los campos obligatorios.");
+        return;
+    }
+
+    // Construir fecha inicio completa
+    const fechaInicio = fecha + "T" + horaInicio;
+
+    // Calcular hora fin
+    let inicioDate = new Date(fechaInicio);
+    let finDate = new Date(inicioDate.getTime() + duracion * 60000);
+
+    const fechaFin = finDate.toISOString();
+
+    // Crear objeto evento
+    const nuevaReserva = {
+        title: "Clase reservada",
+        start: fechaInicio,
+        end: fechaFin
+    };
+
+    // Obtener reservas existentes
+    let reservas = JSON.parse(localStorage.getItem("reservasAlumno")) || [];
+
+    reservas.push(nuevaReserva);
+
+    localStorage.setItem("reservasAlumno", JSON.stringify(reservas));
+
+    alert("Reserva guardada correctamente.");
+
+    window.location.href = "inicio.html";
+});
+</script>
+</body>
+</html>

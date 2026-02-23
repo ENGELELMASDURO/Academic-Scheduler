@@ -1,0 +1,138 @@
+ -- =========================================
+-- CREAR BASE DE DATOS
+-- =========================================
+CREATE DATABASE IF NOT EXISTS academic_scheduler;
+USE academic_scheduler;
+
+-- =========================================
+-- TABLA 1: ADMINISTRADORES
+-- =========================================
+CREATE TABLE administradores (
+    id_admin INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    estado ENUM('activo','inactivo') DEFAULT 'activo',
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- =========================================
+-- TABLA 2: DOCENTES
+-- =========================================
+CREATE TABLE docentes (
+    id_docente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    especialidad VARCHAR(100),
+    estado ENUM('activo','inactivo') DEFAULT 'activo',
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- =========================================
+-- TABLA 3: ALUMNOS
+-- =========================================
+CREATE TABLE alumnos (
+    id_alumno INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    nivel VARCHAR(50),
+    estado ENUM('activo','inactivo') DEFAULT 'activo',
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- =========================================
+-- TABLA 4: RELACION DOCENTE - ALUMNO
+-- =========================================
+CREATE TABLE docente_alumno (
+    id_docente INT,
+    id_alumno INT,
+    PRIMARY KEY (id_docente, id_alumno),
+    FOREIGN KEY (id_docente) REFERENCES docentes(id_docente)
+        ON DELETE CASCADE,
+    FOREIGN KEY (id_alumno) REFERENCES alumnos(id_alumno)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- =========================================
+-- TABLA 5: HORARIOS DOCENTE
+-- =========================================
+CREATE TABLE horarios_docente (
+    id_horario INT AUTO_INCREMENT PRIMARY KEY,
+    id_docente INT NOT NULL,
+    dia_semana TINYINT NOT NULL, -- 1=Lunes ... 7=Domingo
+    hora_inicio TIME NOT NULL,
+    hora_fin TIME NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (id_docente) REFERENCES docentes(id_docente)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- =========================================
+-- TABLA 6: PAQUETES DE SESIONES
+-- =========================================
+CREATE TABLE paquetes_sesiones (
+    id_paquete INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    total_creditos DECIMAL(5,2) NOT NULL,
+    activo BOOLEAN DEFAULT TRUE
+) ENGINE=InnoDB;
+
+-- =========================================
+-- TABLA 7: CREDITOS DEL ALUMNO
+-- =========================================
+CREATE TABLE creditos_alumno (
+    id_credito INT AUTO_INCREMENT PRIMARY KEY,
+    id_alumno INT NOT NULL,
+    creditos_totales DECIMAL(6,2) NOT NULL,
+    creditos_disponibles DECIMAL(6,2) NOT NULL,
+    fecha_asignacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_alumno) REFERENCES alumnos(id_alumno)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- =========================================
+-- TABLA 8: MOVIMIENTOS DE CREDITOS
+-- =========================================
+CREATE TABLE movimientos_creditos (
+    id_movimiento INT AUTO_INCREMENT PRIMARY KEY,
+    id_credito INT NOT NULL,
+    tipo ENUM('asignacion','consumo','cancelacion') NOT NULL,
+    cantidad DECIMAL(6,2) NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_credito) REFERENCES creditos_alumno(id_credito)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- =========================================
+-- TABLA 9: CATALOGO DE CLASES
+-- =========================================
+CREATE TABLE catalogo_clases (
+    id_clase INT AUTO_INCREMENT PRIMARY KEY,
+    tipo_actividad ENUM('Clase','Examen','Muestra') NOT NULL,
+    idioma VARCHAR(50) NOT NULL,
+    duracion_creditos DECIMAL(4,2) NOT NULL
+) ENGINE=InnoDB;
+
+-- =========================================
+-- TABLA 10: RESERVAS
+-- =========================================
+CREATE TABLE reservas (
+    id_reserva INT AUTO_INCREMENT PRIMARY KEY,
+    id_alumno INT NOT NULL,
+    id_docente INT NOT NULL,
+    id_clase INT NOT NULL,
+    fecha DATE NOT NULL,
+    hora_inicio TIME NOT NULL,
+    hora_fin TIME NOT NULL,
+    hora_bloqueo TIME NOT NULL,
+    creditos_consumidos DECIMAL(4,2) NOT NULL,
+    estado ENUM('reservada','cancelada','completada') DEFAULT 'reservada',
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_alumno) REFERENCES alumnos(id_alumno),
+    FOREIGN KEY (id_docente) REFERENCES docentes(id_docente),
+    FOREIGN KEY (id_clase) REFERENCES catalogo_clases(id_clase)
+) ENGINE=InnoDB;
+
+

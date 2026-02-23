@@ -1,4 +1,4 @@
- document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
 
     const calendarEl = document.getElementById('calendar');
 
@@ -13,25 +13,21 @@
     right: ''
 },
 
-
+ 
         selectable: true,
         navLinks: true,
 
         dateClick: function(info) {
             // Redirige al formulario de reserva con fecha seleccionada
-            window.location.href = `../HTML/ALUMNO/formreservas.html?fecha=${info.dateStr}`;
+            window.location.href = `formreservas.html?fecha=${info.dateStr}`;
         },
 
-        events: [
-            {
-                title: 'Clase Inglés',
-                start: '2026-02-05'
-            },
-            {
-                title: 'Examen Ubicación',
-                start: '2026-02-10'
-            }
-        ]
+     events: function(fetchInfo, successCallback, failureCallback) {
+
+    let reservas = JSON.parse(localStorage.getItem("reservasAlumno")) || [];
+
+    successCallback(reservas);
+}
     });
 
     calendar.render();
@@ -54,3 +50,4 @@
     });
 
 });
+ 

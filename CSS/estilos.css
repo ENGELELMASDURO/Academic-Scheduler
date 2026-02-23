@@ -452,7 +452,7 @@ form button:hover {
 .link a:hover {
     text-decoration: underline;
 }
-/*ESTILOS INICIO CALENDARIO INICIO.HTML*/
+/*ESTILOS INICIO CALENDARIO INICIO.HTML------------------------------------------------------------------------------------*/
  /* RESET BÁSICO */
 * {
     margin: 0;
@@ -475,7 +475,7 @@ html, body {
 /* SIDEBAR */
 .sidebar {
     width: 260px;
-    background-color: #000000;
+    background-color: #1f2933;
     color: #ffffff;
     padding: 20px;
     display: flex;
@@ -496,14 +496,14 @@ html, body {
 .progress-bar {
     width: 100%;
     height: 10px;
-    background-color: #0e0f0f;
+    background-color: #374151;
     border-radius: 5px;
     overflow: hidden;
 }
 
 .progress-fill {
     height: 100%;
-    background-color: #4ee6fa;
+    background-color: #3b82f6;
 }
 
 .credits-text {
@@ -514,7 +514,7 @@ html, body {
 /* BOTONES */
 .sidebar-actions a,
 .view-options button,
-.history , .ajustes a {
+.history a {
     display: block;
     width: 100%;
     padding: 10px;
@@ -545,5 +545,169 @@ html, body {
     height: 100%;
     width: 100%;
 }
+ /* ============================= */
+/* ADMINISTRADOR - ESTILO OSCURO */
+/* ============================= */
 
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
 
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 250px;
+    background-color: #111;
+    padding: 20px;
+    box-sizing: border-box;
+    border-right: 1px solid #222;
+}
+
+.sidebar h3 {
+    margin-top: 0;
+    color: #fff;
+}
+
+.admin-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.admin-menu li {
+    margin: 15px 0;
+}
+
+.admin-menu a {
+    text-decoration: none;
+    color: #ccc;
+    transition: 0.3s;
+}
+
+.admin-menu a:hover {
+    color: #fff;
+}
+
+/* MAIN CONTENT */
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+    background-color: #000;
+    box-sizing: border-box;
+}
+
+.admin-section {
+    margin-bottom: 50px;
+}
+
+.admin-section h2 {
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* CARDS RESUMEN */
+
+.admin-cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.admin-card {
+    background-color: #111;
+    padding: 20px;
+    width: 200px;
+    border: 1px solid #222;
+    text-align: center;
+}
+
+.admin-card h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #aaa;
+}
+
+.admin-card p {
+    font-size: 24px;
+    margin: 0;
+    color: #fff;
+}
+
+/* TABLAS */
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    border: 1px solid #222;
+    padding: 10px;
+    text-align: left;
+}
+
+.admin-table th {
+    background-color: #111;
+    color: #ccc;
+}
+
+.admin-table tr:nth-child(even) {
+    background-color: #0d0d0d;
+}
+
+/* BOTONES */
+
+button {
+    background-color: #222;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+/* FORMULARIOS */
+
+input,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    background-color: #111;
+    border: 1px solid #333;
+    color: #fff;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #555;
+}
+
+/* RESPONSIVE SIMPLE */
+
+@media (max-width: 768px) {
+    .admin-cards {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 200px;
+    }
+}

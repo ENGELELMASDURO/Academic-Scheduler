@@ -1,0 +1,60 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestionar Reserva</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../CSS/estilos.css">
+</head>
+<body> 
+
+<div class="form-container">
+
+    <h2>Gestión de Reserva</h2>
+
+    <form id="formGestion">
+
+        <label>Alumno</label>
+        <input type="text" id="alumnoNombre" readonly>
+
+        <label>Fecha</label>
+        <input type="text" id="fechaReserva" readonly>
+
+        <label>Hora</label>
+        <input type="text" id="horaReserva" readonly>
+
+        <label>Mensaje opcional al alumno</label>
+        <textarea id="mensajeDocente" rows="4" placeholder="Ej: Disculpa, tuve un imprevisto..."></textarea>
+
+        <button type="button" id="cancelarReserva">Cancelar Reserva</button>
+
+    </form>
+
+</div>
+
+ <script>
+const params = new URLSearchParams(window.location.search);
+
+const id = params.get('id');
+
+document.getElementById('alumnoNombre').value = params.get('alumno');
+document.getElementById('fechaReserva').value = params.get('fecha');
+document.getElementById('horaReserva').value = params.get('hora');
+
+document.getElementById('cancelarReserva').addEventListener('click', function() {
+
+    let reservas = JSON.parse(localStorage.getItem("reservasAlumno")) || [];
+
+    reservas.splice(id, 1);
+
+    localStorage.setItem("reservasAlumno", JSON.stringify(reservas));
+
+    alert("Reserva eliminada correctamente.");
+
+    window.location.href = "iniciodocente.html";
+});
+</script>
+
+</body>
+</html>

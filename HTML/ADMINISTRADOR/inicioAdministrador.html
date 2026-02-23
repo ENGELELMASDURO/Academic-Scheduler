@@ -1,0 +1,166 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>AcademicScheduler | Administrador</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../CSS/estilos.css">
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR ADMIN -->
+    <aside class="sidebar">
+
+        <div class="hamburger">☰</div>
+
+        <section class="sidebar-actions">
+            <h3>Panel Administrador</h3>
+        </section>
+
+        <section class="admin-menu">
+            <ul>
+                <li><a href="#usuarios">Gestión de Usuarios</a></li>
+                <li><a href="#reservas">Gestión de Reservas</a></li>
+                <li><a href="#reportes">Reportes</a></li>
+                <li><a href="#configuracion">Configuración</a></li>
+            </ul>
+        </section>
+
+        <section class="ajustes">
+            <a href="../formIniciosesion.html">Cerrar Sesión</a>
+        </section>
+
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+
+        <!-- RESUMEN GENERAL -->
+        <section class="admin-section">
+            <h2>Resumen del Sistema</h2>
+
+            <div class="admin-cards">
+
+                <div class="admin-card">
+                    <h3>Alumnos Registrados</h3>
+                    <p>120</p>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Docentes Activos</h3>
+                    <p>8</p>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Reservas del Mes</h3>
+                    <p>340</p>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Sesiones Canceladas</h3>
+                    <p>12</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- GESTIÓN DE USUARIOS -->
+        <section class="admin-section" id="usuarios">
+            <h2>Gestión de Usuarios</h2>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Rol</th>
+                        <th>Email</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Angel</td>
+                        <td>Alumno</td>
+                        <td>angel@email.com</td>
+                        <td>Activo</td>
+                        <td>
+                            <button>Editar</button>
+                            <button>Desactivar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Profesor A</td>
+                        <td>Docente</td>
+                        <td>profesor@email.com</td>
+                        <td>Activo</td>
+                        <td>
+                            <button>Editar</button>
+                            <button>Desactivar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- GESTIÓN DE RESERVAS -->
+        <section class="admin-section" id="reservas">
+            <h2>Gestión de Reservas</h2>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Alumno</th>
+                        <th>Docente</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Angel</td>
+                        <td>Profesor A</td>
+                        <td>12/02/2026</td>
+                        <td>10:00 AM</td>
+                        <td>Activa</td>
+                        <td><button>Cancelar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- REPORTES -->
+        <section class="admin-section" id="reportes">
+            <h2>Reportes</h2>
+
+            <p>Descargar reporte mensual de reservas:</p>
+            <button>Generar Reporte PDF</button>
+        </section>
+
+        <!-- CONFIGURACIÓN -->
+        <section class="admin-section" id="configuracion">
+            <h2>Configuración del Sistema</h2>
+
+            <form>
+                <label>Máximo de sesiones por alumno:</label>
+                <input type="number" value="10">
+
+                <label>Duración estándar de sesión (minutos):</label>
+                <input type="number" value="60">
+
+                <br><br>
+                <button type="submit">Guardar Cambios</button>
+            </form>
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>
